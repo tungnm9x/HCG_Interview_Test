@@ -1,0 +1,48 @@
+<!-- Trailer section -->
+<section>
+  <div class="mx-8 mt-12">
+    <nmt-carousel [items]="carouselItems"></nmt-carousel>
+  </div>
+</section>
+<!-- END Trailer section -->
+
+<!-- Pokémon section -->
+<section>
+  <div class="container mx-auto py-14">
+    <!-- TITLE -->
+    <h2 class="text-4xl tracking-tight font-bold mb-4">Pokemons</h2>
+
+    <!-- LIST -->
+    <ng-container *ngIf="pokemons$ | async as pokemons; else skeleton">
+      <div
+        class="mt-6 mb-6 grid grid-cols-1 xl:grid-cols-5 gap-y-10 xl:gap-x-8"
+      >
+        <ng-container *ngFor="let i of pokemons">
+          <div class="group relative">
+            <div
+              class="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80"
+            >
+              <img
+                src="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg"
+                alt="Front of men&#039;s Basic Tee in black."
+                class="h-full w-full object-cover object-center lg:h-full lg:w-full"
+              />
+            </div>
+
+            <div class="mt-4 flex justify-between">
+              <h3 class="text-sm text-gray-700 font-bold">
+                {{ i.name }}
+              </h3>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+    <!-- END LIST -->
+  </div>
+</section>
+<!-- END Pokémon section -->
+
+<ng-template #skeleton>
+  <nmt-skeleton></nmt-skeleton>
+</ng-template>
