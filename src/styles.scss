@@ -13,7 +13,7 @@
 html,
 body {
   font-family: Montserrat, sans-serif;
-  color: var(--primary);
+  // color: var(--primary);
 }
 
 blockquote,
@@ -63,15 +63,7 @@ ul {
   border: 4px;
 }
 
-// INPUT
-.nmt-input {
-  @apply w-full p-3 border border-gray-100 bg-gray-100 outline-none text-sm;
-}
-
-.nmt-btn {
-  @apply px-10 py-3 hover:opacity-70 w-full;
-
-  &.primary {
-    // @apply text-white bg-primary;
-  }
+// MODAL
+.modal-md {
+  max-width: 800px;
 }

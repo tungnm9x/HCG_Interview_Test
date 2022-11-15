@@ -1,0 +1,53 @@
+<div *ngIf="pokemon; else skeleton" class="grid grid-cols-2 gap-x-5">
+  <div>
+    <img
+      [src]="pokemon.sprites.other.dream_world.front_default"
+      [alt]="pokemon.name + ' sprite'"
+      class="h-64 mb-8 w-full px-8"
+    />
+  </div>
+
+  <div>
+    <div class="font-bold text-2xl text-center mb-4">
+      {{ pokemon.name }}
+    </div>
+
+    <div class="font-light mb-3">
+      Id:
+
+      <span class="font-medium text-gray-700">{{ pokemon.id }}</span>
+    </div>
+
+    <div class="font-light mb-3">
+      XP:
+      <span class="font-medium text-gray-700">{{
+        pokemon.base_experience
+      }}</span>
+    </div>
+
+    <div class="font-light mb-3">
+      Type:
+      <span class="font-medium text-gray-700">
+        <ng-container *ngIf="pokemon.types[0]?.type?.name">
+          {{ pokemon.types[0].type.name || "" }}
+        </ng-container>
+
+        <ng-container *ngIf="pokemon.types[1]?.type?.name">
+          / {{ pokemon.types[1].type.name || "" }}
+        </ng-container>
+      </span>
+    </div>
+    <div class="font-light mb-3">
+      Height:
+      <span class="font-medium text-gray-700">{{ pokemon.height }}m</span>
+    </div>
+    <div class="font-light mb-3">
+      Weight:
+      <span class="font-medium text-gray-700">{{ pokemon.weight }}kg</span>
+    </div>
+  </div>
+</div>
+
+<ng-template #skeleton>
+  <nmt-skeleton></nmt-skeleton>
+</ng-template>

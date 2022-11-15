@@ -1,0 +1,51 @@
+<div class="container mx-auto py-14">
+  <!-- TITLE -->
+  <h2 class="text-4xl tracking-tight font-bold mb-4">Items</h2>
+
+  <!-- LIST -->
+  <ng-container *ngIf="itemStatus$ | async as status">
+    <ng-container *ngIf="status === 'success'">
+      <ng-container *ngIf="items$ | async as items">
+        <div
+          class="mt-6 mb-6 grid grid-cols-5 xl:grid-cols-10 gap-y-10 xl:gap-x-4"
+        >
+          <ng-container *ngFor="let item of items">
+            <div
+              class="max-w-sm rounded overflow-hidden shadow-xl h-full hover:scale-110 cursor-pointer transition ease-in-out"
+            >
+              <div class="px-4 py-4">
+                <img
+                  [src]="item.sprites.default"
+                  [alt]="item.name + ' sprite'"
+                  class="mb-8 mx-auto"
+                />
+                <div class="font-bold text-sm text-center">
+                  {{ item.name }}
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="status === 'loading'">
+      <nmt-skeleton></nmt-skeleton>
+    </ng-container>
+
+    <ng-container *ngIf="status === 'error'">
+      <div *ngIf="itemsError$ | async as error" class="text-red-500 p-8">
+        {{ error }}
+      </div>
+
+      <div
+        class="cursor-pointer flex items-center mt-4"
+        (click)="refreshItems()"
+      >
+        Click here to reload <i class="bx bx-refresh bx-sm"></i>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <!-- END LIST -->
+</div>
