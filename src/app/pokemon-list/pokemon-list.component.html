@@ -16,7 +16,9 @@
 
     <!-- LIST -->
     <div class="filter-box mb-10">
-      <div class="grid grid-cols-4">
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+      >
         <!-- <div class="font-semibold mb-4">Search by name</div> -->
         <input
           [formControl]="formControl"
@@ -35,7 +37,7 @@
       <ng-container *ngIf="status === 'success'">
         <ng-container *ngIf="pokemons$ | async as pokemons">
           <div
-            class="mt-6 mb-6 grid grid-cols-1 xl:grid-cols-5 gap-y-10 xl:gap-x-8"
+            class="mt-6 mb-6 grid grid-cols-1 gap-y-8 md:grid-cols-2 md:gap-x-4 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 2xl:gap-x-8"
           >
             <ng-container *ngFor="let i of pokemons; trackBy: trackByFn">
               <nmt-pokemon-item
