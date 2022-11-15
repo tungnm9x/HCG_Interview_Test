@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import { GetListResponse } from '@core/models/response.model';
 import { PokemonService } from '@core/services/pokemon.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { catchError, forkJoin, map, Observable, of, switchMap } from 'rxjs';
 import { AppState } from '../app.state';
-import { GetListResponse, PokemonDetail } from '../home/home.model';
+import { PokemonDetail } from '../home/home.model';
 import {
   loadPokemons,
   loadPokemonsFailure,

@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpService } from '@core/common/http.service';
 import { API } from '@core/const/api.const';
 import { PaginationEvent } from '@core/models/filter.model';
-import { GetListResponse, PokemonDetail } from 'app/state/home/home.model';
+import { GetListResponse } from '@core/models/response.model';
+import { PokemonDetail } from 'app/state/home/home.model';
 import { Observable } from 'rxjs';
 
 @Injectable({

@@ -1,16 +1,12 @@
 <div class="flex flex-col justify-between h-screen bg-white border-r">
-  <div class="px-4 py-6">
-    <img
-      [routerLink]="[ROUTES_CONST.HOME.ROOT]"
-      class="block w-32 h-10 m-4 cursor-pointer"
-      src="https://www.the-hash.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo.3320537b.png&w=128&q=75"
-      alt="logo"
-    />
+  <div class="px-4">
+    <!-- <nmt-header></nmt-header> -->
 
     <!-- MENU -->
-    <nav class="flex flex-col mt-8 space-y-1">
+    <nav class="flex flex-col space-y-1">
       <div
-        class="flex items-center px-4 py-2 text-gray-700 bg-gray-100 rounded-lg"
+        [routerLink]="[ROUTES_CONST.HOME.ROOT]"
+        class="flex items-center px-4 py-2 text-gray-700 bg-gray-100 rounded-lg cursor-pointer"
       >
         <i class="bx bx-tachometer"></i>
         <span class="ml-3 text-sm font-medium"> Home </span>
@@ -21,7 +17,7 @@
           class="flex items-center px-4 py-2 text-gray-500 rounded-lg cursor-pointer hover:bg-gray-100 hover:text-gray-700"
         >
           <i class="bx bx-package"></i>
-          <span class="ml-3 text-sm font-medium"> Games / Game Versions </span>
+          <span class="ml-3 text-sm font-medium"> Game Versions </span>
 
           <span
             class="ml-auto transition duration-300 shrink-0 group-open:-rotate-180"
@@ -41,19 +37,17 @@
           </span>
         </summary>
 
-        <nav class="mt-1.5 ml-8 flex flex-col">
-          <a
-            href="#"
-            class="flex items-center px-4 py-2 text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700"
-          >
-            <span class="ml-3 text-sm font-medium"> Yellow </span>
-          </a>
-          <a
-            href="#"
-            class="flex items-center px-4 py-2 text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700"
-          >
-            <span class="ml-3 text-sm font-medium"> Red </span>
-          </a>
+        <nav class="mt-1.5 ml-8 flex flex-col overflow-y-scroll max-h-[500px]">
+          <ng-container *ngIf="version$ | async as versions">
+            <ng-container *ngFor="let v of versions; trackBy: trackByFn">
+              <a
+                href="#"
+                class="flex items-center px-4 py-2 text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700"
+              >
+                <span class="ml-3 text-sm font-medium"> {{ v.name }} </span>
+              </a>
+            </ng-container>
+          </ng-container>
         </nav>
       </details>
 
@@ -82,31 +76,33 @@
           </span>
         </summary>
 
-        <nav class="mt-1.5 ml-8 flex flex-col">
-          <a
-            href="#"
-            class="flex items-center px-4 py-2 text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700"
-          >
-            <span class="ml-3 text-sm font-medium"> Yellow </span>
-          </a>
-          <a
-            href="#"
-            class="flex items-center px-4 py-2 text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700"
-          >
-            <span class="ml-3 text-sm font-medium"> Red </span>
-          </a>
+        <nav class="mt-1.5 ml-8 flex flex-col overflow-y-scroll max-h-[500px]">
+          <ng-container *ngIf="generations$ | async as generationss">
+            <ng-container *ngFor="let v of generationss; trackBy: trackByFn">
+              <a
+                href="#"
+                class="flex items-center px-4 py-2 text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700"
+              >
+                <span class="ml-3 text-sm font-medium"> {{ v.name }} </span>
+              </a>
+            </ng-container>
+          </ng-container>
         </nav>
       </details>
 
       <!-- LOCATIONS -->
-      <div class="flex items-center px-4 py-2 text-gray-700 rounded-lg">
+      <div
+        class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-100 hover:text-gray-700 cursor-pointer"
+      >
         <i class="bx bx-map"></i>
         <span class="ml-3 text-sm font-medium"> Locations </span>
       </div>
       <!-- END LOCATIONS -->
 
       <!-- ITEMS -->
-      <div class="flex items-center px-4 py-2 text-gray-700 rounded-lg">
+      <div
+        class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-100 hover:text-gray-700 cursor-pointer"
+      >
         <i class="bx bx-paperclip"></i>
         <span class="ml-3 text-sm font-medium"> Items </span>
       </div>

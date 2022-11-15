@@ -2,7 +2,17 @@
   <div class="container mx-auto py-14">
     <!-- TITLE -->
 
-    <h2 class="text-4xl tracking-tight font-bold mb-8">Pokemons List</h2>
+    <div class="flex justify-between items-center">
+      <h2 class="text-4xl tracking-tight font-bold mb-8">Pokemons List</h2>
+      <button
+        class="outline-none bg-transparent hover:font-bold"
+        [routerLink]="[ROUTES_CONST.HOME.ROOT]"
+      >
+        <i
+          class="bx bx-subdirectory-left bx-md rounded-full shadow-xl h-full hover:scale-110 cursor-pointer transition ease-in-out p-3"
+        ></i>
+      </button>
+    </div>
 
     <!-- LIST -->
     <div class="filter-box mb-10">
@@ -34,6 +44,8 @@
               ></nmt-pokemon-item>
             </ng-container>
           </div>
+
+          <div *ngIf="pokemons.length == 0" class="">No data found.</div>
         </ng-container>
       </ng-container>
 

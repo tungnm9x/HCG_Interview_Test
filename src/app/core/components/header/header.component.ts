@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ROUTES_CONST } from '@core/const';
 
 export interface HeaderItem {
   label: string;
@@ -11,6 +12,8 @@ export interface HeaderItem {
   templateUrl: './header.component.html',
 })
 export class HeaderComponent implements OnInit {
+  ROUTES_CONST = ROUTES_CONST;
+
   constructor() {}
 
   ngOnInit(): void {}

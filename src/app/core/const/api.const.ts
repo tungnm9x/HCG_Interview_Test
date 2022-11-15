@@ -7,4 +7,10 @@ export const API = {
     LIST: '/item',
     DETAIL: '/item/{name}',
   },
+  VERSION: {
+    LIST: '/version',
+  },
+  GENERATION: {
+    LIST: '/generation',
+  },
 };

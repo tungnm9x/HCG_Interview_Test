@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { ROUTES_CONST } from '@core/const';
 import { PaginationEvent } from '@core/models/filter.model';
 import { Store } from '@ngrx/store';
 import { AppState } from 'app/state/app.state';
@@ -47,6 +48,7 @@ export class PokemonListComponent implements OnInit {
   // states which no need store
   isVisible = false;
   formControl = new FormControl('');
+  ROUTES_CONST = ROUTES_CONST;
 
   constructor(private store: Store<AppState>, private route: ActivatedRoute) {}
 
