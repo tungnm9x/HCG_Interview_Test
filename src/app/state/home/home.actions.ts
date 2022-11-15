@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { PokemonDetail } from './home.model';
+import { ItemDetail, PokemonDetail } from './home.model';
 
 export const loadPokemons = createAction('[Home Page] Load Pokemons');
 
@@ -16,4 +16,16 @@ export const loadPokemonsFailure = createAction(
 export const selectPokemon = createAction(
   '[Home Page] Select Pokemon',
   props<{ item: PokemonDetail }>()
+);
+
+export const loadItems = createAction('[Home Page] Load Items');
+
+export const loadItemsSuccess = createAction(
+  '[Home Page] Load Items Success',
+  props<{ items: ItemDetail[] }>()
+);
+
+export const loadItemsFailure = createAction(
+  '[Home Page] Load Items Failure',
+  props<{ error: string }>()
 );

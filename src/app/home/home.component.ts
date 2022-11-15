@@ -3,7 +3,11 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { CarouselItem } from 'app/shared/carousel/carousel.component';
 import { AppState } from 'app/state/app.state';
-import { loadPokemons, selectPokemon } from 'app/state/home/home.actions';
+import {
+  loadItems,
+  loadPokemons,
+  selectPokemon,
+} from 'app/state/home/home.actions';
 import { PokemonDetail } from 'app/state/home/home.model';
 import { Status } from 'app/state/home/home.reducer';
 import {
@@ -21,6 +25,7 @@ import { map, Observable } from 'rxjs';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  // carousel
   carouselItems$: Observable<CarouselItem[]> = this.store
     .select(selectAllVideoUrl)
     .pipe(
@@ -34,6 +39,7 @@ export class HomeComponent implements OnInit {
       )
     );
 
+  // pokemon
   pokemons$: Observable<PokemonDetail[]> = this.store.select(selectAllPokemon);
 
   loadPokemonStatus$: Observable<Status> =
@@ -45,6 +51,7 @@ export class HomeComponent implements OnInit {
     selectPokemonSelected
   );
 
+  // states which no need store
   isVisible = false;
 
   constructor(
@@ -54,6 +61,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(loadPokemons());
+    this.store.dispatch(loadItems());
   }
 
   refresh() {
@@ -63,5 +71,9 @@ export class HomeComponent implements OnInit {
   showDetail(pokemon: PokemonDetail) {
     this.isVisible = true;
     this.store.dispatch(selectPokemon({ item: pokemon }));
+  }
+
+  refreshItems() {
+    this.store.dispatch(loadItems());
   }
 }

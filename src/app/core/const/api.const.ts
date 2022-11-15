@@ -3,4 +3,8 @@ export const API = {
     LIST: '/pokemon',
     DETAIL: '/pokemon/{name}',
   },
+  ITEM: {
+    LIST: '/item',
+    DETAIL: '/item/{name}',
+  },
 };

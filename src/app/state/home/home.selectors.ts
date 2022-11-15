@@ -23,3 +23,13 @@ export const selectPokemonSelected = createSelector(
   selectHome,
   (state) => state.pokemonSelected
 );
+
+export const selectAllItem = createSelector(selectHome, (state) => state.items);
+export const selectStatusItems = createSelector(
+  selectHome,
+  (state) => state.itemsStatus
+);
+export const selectErrorItems = createSelector(
+  selectHome,
+  (state) => state.itemsError
+);

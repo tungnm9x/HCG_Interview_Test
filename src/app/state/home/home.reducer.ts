@@ -1,11 +1,14 @@
 import { createReducer, on } from '@ngrx/store';
 import {
+  loadItems,
+  loadItemsFailure,
+  loadItemsSuccess,
   loadPokemons,
   loadPokemonsFailure,
   loadPokemonsSuccess,
   selectPokemon,
 } from './home.actions';
-import { PokemonDetail } from './home.model';
+import { ItemDetail, PokemonDetail } from './home.model';
 
 export type Status = 'init' | 'loading' | 'success' | 'error';
 
@@ -15,6 +18,9 @@ export interface HomeState {
   status: Status;
   error: string | null;
   pokemonSelected: PokemonDetail | null;
+  items: ItemDetail[];
+  itemsStatus: Status;
+  itemsError: string | null;
 }
 
 export const initHomeState: HomeState = {
@@ -28,6 +34,9 @@ export const initHomeState: HomeState = {
   status: 'init',
   error: null,
   pokemonSelected: null,
+  items: [],
+  itemsStatus: 'init',
+  itemsError: null,
 };
 
 export const homeReducer = createReducer(
@@ -48,5 +57,18 @@ export const homeReducer = createReducer(
   on(selectPokemon, (state, { item }) => ({
     ...state,
     pokemonSelected: item,
+  })),
+  on(loadItems, (state) => ({ ...state, itemsStatus: 'loading' })),
+  on(loadItemsSuccess, (state, { items }) => ({
+    ...state,
+    itemsStatus: 'success',
+    items: items,
+    itemsError: null,
+  })),
+  on(loadItemsFailure, (state, { error }) => ({
+    ...state,
+    itemsStatus: 'error',
+    items: [],
+    itemsError: error,
   }))
 );
