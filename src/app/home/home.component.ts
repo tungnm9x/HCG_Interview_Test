@@ -1,8 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { HttpService } from '@core/common/http.service';
+import { Store } from '@ngrx/store';
 import { CarouselItem } from 'app/shared/carousel/carousel.component';
-import { map, shareReplay } from 'rxjs';
+import { AppState } from 'app/state/app.state';
+import { loadPokemons } from 'app/state/home/home.actions';
+import { PokemonDetail } from 'app/state/home/home.model';
+import { Status } from 'app/state/home/home.reducer';
+import {
+  selectAllPokemon,
+  selectAllVideoUrl,
+  selectErrorPokemons,
+  selectStatusPokemons,
+} from 'app/state/home/home.selectors';
+import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -10,33 +20,32 @@ import { map, shareReplay } from 'rxjs';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  urls = [
-    'https://youtu.be/D0zYJ1RQ-fs',
-    'https://youtu.be/1roy4o4tqQM',
-    'https://youtu.be/bILE5BEyhdo',
-    'https://youtu.be/uBYORdr_TY8',
-  ];
+  carouselItems$: Observable<CarouselItem[]> = this.store
+    .select(selectAllVideoUrl)
+    .pipe(
+      map((urls) =>
+        urls.map((url) => ({
+          // get Id video and covert url to safeUrl
+          src: this._sanitizer.bypassSecurityTrustResourceUrl(
+            url.replace('https://youtu.be/', 'https://www.youtube.com/embed/')
+          ),
+        }))
+      )
+    );
 
-  carouselItems: CarouselItem[] = [];
+  pokemons$: Observable<PokemonDetail[]> = this.store.select(selectAllPokemon);
 
-  _pokemonResponse$ = this.http
-    .sendToServer('GET', '/pokemon', null, null, {
-      limit: 10,
-      offset: 0,
-    })
-    .pipe(shareReplay());
+  loadPokemonStatus$: Observable<Status> =
+    this.store.select(selectStatusPokemons);
 
-  pokemons$ = this._pokemonResponse$.pipe(map((res) => res.results));
+  error$: Observable<string | null> = this.store.select(selectErrorPokemons);
 
-  constructor(private _sanitizer: DomSanitizer, private http: HttpService) {}
+  constructor(
+    private _sanitizer: DomSanitizer,
+    private store: Store<AppState>
+  ) {}
 
   ngOnInit(): void {
-    // covert url to https://www.youtube.com/embed/ + videoID
-    this.carouselItems = this.urls.map((url) => ({
-      // using safeUrl
-      src: this._sanitizer.bypassSecurityTrustResourceUrl(
-        url.replace('https://youtu.be/', 'https://www.youtube.com/embed/')
-      ),
-    }));
+    this.store.dispatch(loadPokemons());
   }
 }

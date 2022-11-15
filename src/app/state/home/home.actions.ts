@@ -1,14 +1,14 @@
 import { createAction, props } from '@ngrx/store';
-import { Pokemon } from './home.model';
+import { PokemonDetail } from './home.model';
 
-export const loadPokemons = createAction('[Blog Page] Load Blogs');
+export const loadPokemons = createAction('[Home Page] Load Pokemons');
 
 export const loadPokemonsSuccess = createAction(
   '[Home Page] Load Pokemons Success',
-  props<{ items: Pokemon[] }>()
+  props<{ items: PokemonDetail[] }>()
 );
 
 export const loadPokemonsFailure = createAction(
-  '[Blog Page] Load Blogs Failure',
+  '[Home Page] Load Pokemons Failure',
   props<{ error: string }>()
 );
