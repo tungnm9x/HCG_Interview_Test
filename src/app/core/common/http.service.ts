@@ -31,7 +31,6 @@ export class HttpService {
         }
       });
     const params = new HttpParams({ fromObject: pr });
-    console.log(url);
     switch (method) {
       case 'GET':
         ret = this.http.get(url, {

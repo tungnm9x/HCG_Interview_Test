@@ -66,4 +66,10 @@ ul {
 // MODAL
 .modal-md {
   max-width: 800px;
+  @apply mt-40;
+}
+
+// INPUT
+.nmt-input {
+  @apply w-full p-3 border border-gray-100 bg-gray-100 outline-none text-sm;
 }

@@ -1,0 +1,54 @@
+<div class="flex content-between">
+  <nav aria-label="pagination">
+    <ul>
+      <li>
+        <button
+          aria-label="Go To Previous Page"
+          [attr.aria-disabled]="current === 1"
+          [disabled]="current === 1"
+          (click)="onPrevious()"
+        >
+          Previous
+        </button>
+      </li>
+
+      <li *ngFor="let page of pages">
+        <a
+          [attr.aria-current]="page === current ? 'page' : null"
+          [attr.aria-label]="
+            page === current
+              ? 'Current Page, Page ' + page
+              : 'Go to Page ' + page
+          "
+          [class.current]="page === current"
+          tabindex="0"
+          (click)="onGoTo(page)"
+          (keyup.enter)="onGoTo(page)"
+          *ngIf="page !== -1"
+        >
+          {{ page }}
+        </a>
+        <div *ngIf="page === -1">...</div>
+      </li>
+
+      <li>
+        <button
+          aria-label="Go To Next Page"
+          [attr.aria-disabled]="current === total"
+          [disabled]="current === total"
+          (click)="onNext()"
+        >
+          Next
+        </button>
+      </li>
+    </ul>
+  </nav>
+
+  <select class="cursor-pointer ml-9" (change)="onPageSizeChange($event)">
+    <ng-container *ngFor="let i of pageSizeOptions">
+      <option [selected]="i === pageSize" [value]="i">
+        {{ i }}
+      </option>
+    </ng-container>
+  </select>
+</div>

@@ -1,31 +1,26 @@
-<!-- TRAILER SECTON -->
-<section>
-  <ng-container *ngIf="carouselItems$ | async as carouselItems">
-    <div class="mx-8 mt-12">
-      <nmt-carousel [items]="carouselItems"></nmt-carousel>
-    </div>
-  </ng-container>
-</section>
-<!-- END TRAILER SECTON -->
-
-<!-- POKEMON LIST SECTION -->
 <section>
   <div class="container mx-auto py-14">
     <!-- TITLE -->
-    <div class="flex justify-between items-center">
-      <h2 class="text-4xl tracking-tight font-bold mb-4">Pokemons</h2>
-      <div class="flex items-center">
-        <button
-          class="outline-none bg-transparent hover:font-bold"
-          [routerLink]="[ROUTES_CONST.POKEMON.ROOT]"
-        >
-          View More
-        </button>
-        <i class="bx bx-chevrons-right bx-tada ml-1 bx-sm"></i>
+
+    <h2 class="text-4xl tracking-tight font-bold mb-8">Pokemons List</h2>
+
+    <!-- LIST -->
+    <div class="filter-box mb-10">
+      <div class="grid grid-cols-4">
+        <!-- <div class="font-semibold mb-4">Search by name</div> -->
+        <input
+          [formControl]="formControl"
+          class="nmt-input w-56"
+          placeholder="Search by Name"
+          type="text"
+        />
+      </div>
+      <div class="text-gray-500 mt-4 text-sm">
+        *Filter only in Frontend because PokemonAPI doesn't support filtering
+        list by Name
       </div>
     </div>
 
-    <!-- LIST -->
     <ng-container *ngIf="loadPokemonStatus$ | async as status">
       <ng-container *ngIf="status === 'success'">
         <ng-container *ngIf="pokemons$ | async as pokemons">
@@ -49,25 +44,31 @@
       <ng-container *ngIf="status === 'error'">
         <div *ngIf="error$ | async as error" class="text-red-500 p-8">
           {{ error }}
-        </div>
 
-        <div class="cursor-pointer flex items-center mt-4" (click)="refresh()">
-          Click here to reload <i class="bx bx-refresh bx-sm"></i>
+          <div
+            class="cursor-pointer flex items-center mt-4"
+            (click)="refresh()"
+          >
+            Click here to reload <i class="bx bx-refresh bx-sm"></i>
+          </div>
         </div>
       </ng-container>
+
+      <div class="pb-8"></div>
+
+      <nmt-pagination
+        *ngIf="vm$ | async as vm"
+        [total]="vm[0]"
+        [current]="vm[1].current"
+        [pageSize]="vm[1].pageSize"
+        (pageChange)="pageChange($event)"
+      ></nmt-pagination>
     </ng-container>
 
     <!-- END LIST -->
   </div>
 </section>
-<!-- END POKEMON LIST SECTION -->
 
 <nmt-modal [(isVisible)]="isVisible" [showClose]="true">
   <nmt-pokemon-detail [pokemon]="pokemonSelected$ | async"></nmt-pokemon-detail>
 </nmt-modal>
-
-<!-- ITEMS SECTION -->
-<section>
-  <nmt-item-section></nmt-item-section>
-</section>
-<!-- END ITEMS SECTION -->

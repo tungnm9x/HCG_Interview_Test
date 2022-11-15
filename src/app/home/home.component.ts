@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ROUTES_CONST } from '@core/const';
 import { Store } from '@ngrx/store';
 import { CarouselItem } from 'app/shared/carousel/carousel.component';
 import { AppState } from 'app/state/app.state';
-import {
-  loadItems,
-  loadPokemons,
-  selectPokemon,
-} from 'app/state/home/home.actions';
+import { loadPokemons, selectPokemon } from 'app/state/home/home.actions';
 import { PokemonDetail } from 'app/state/home/home.model';
 import { Status } from 'app/state/home/home.reducer';
 import {
@@ -17,7 +14,7 @@ import {
   selectPokemonSelected,
   selectStatusPokemons,
 } from 'app/state/home/home.selectors';
-import { map, Observable } from 'rxjs';
+import { map, Observable, take } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -51,8 +48,13 @@ export class HomeComponent implements OnInit {
     selectPokemonSelected
   );
 
+  trackByFn(index: number, item: PokemonDetail) {
+    return item.id;
+  }
+
   // states which no need store
   isVisible = false;
+  ROUTES_CONST = ROUTES_CONST;
 
   constructor(
     private _sanitizer: DomSanitizer,
@@ -60,8 +62,9 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(loadPokemons());
-    this.store.dispatch(loadItems());
+    this.loadPokemonStatus$.pipe(take(1)).subscribe((status) => {
+      if (status !== 'success') this.refresh();
+    });
   }
 
   refresh() {
@@ -71,9 +74,5 @@ export class HomeComponent implements OnInit {
   showDetail(pokemon: PokemonDetail) {
     this.isVisible = true;
     this.store.dispatch(selectPokemon({ item: pokemon }));
-  }
-
-  refreshItems() {
-    this.store.dispatch(loadItems());
   }
 }

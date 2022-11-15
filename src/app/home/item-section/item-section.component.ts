@@ -23,9 +23,17 @@ export class ItemSectionComponent implements OnInit {
 
   itemsError$: Observable<string | null> = this.store.select(selectErrorItems);
 
+  trackByFn(index: number, item: ItemDetail) {
+    return item.id;
+  }
+
   constructor(private store: Store<AppState>) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.itemStatus$.subscribe((status) => {
+      if (status !== 'success') this.refreshItems();
+    });
+  }
 
   refreshItems() {
     this.store.dispatch(loadItems());
