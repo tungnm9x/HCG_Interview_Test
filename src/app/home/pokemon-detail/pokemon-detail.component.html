@@ -27,8 +27,10 @@
 
     <div class="font-light mb-3">
       Type:
-      <span class="font-medium text-gray-700"
-        >{{ pokemon.types[0]?.type?.name || "" }}
+      <span class="font-medium text-gray-700">
+        <ng-container *ngIf="pokemon.types[0]?.type?.name">
+          {{ pokemon.types[0].type.name || "" }}
+        </ng-container>
 
         <ng-container *ngIf="pokemon.types[1]?.type?.name">
           / {{ pokemon.types[1].type.name || "" }}

@@ -8,7 +8,7 @@
 </section>
 <!-- END TRAILER SECTON -->
 
-<!-- POKEMON SECTION -->
+<!-- POKEMON LIST SECTION -->
 <section>
   <div class="container mx-auto py-14">
     <!-- TITLE -->
@@ -51,8 +51,12 @@
     <!-- END LIST -->
   </div>
 </section>
-<!-- END POKEMON SECTION -->
+<!-- END POKEMON LIST SECTION -->
 
 <nmt-modal [(isVisible)]="isVisible" [showClose]="true">
   <nmt-pokemon-detail [pokemon]="pokemonSelected$ | async"></nmt-pokemon-detail>
 </nmt-modal>
+
+<!-- ITEMS SECTION -->
+
+<!-- END ITEMS SECTION -->
