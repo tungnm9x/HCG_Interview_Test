@@ -1,7 +1,7 @@
 <div class="flex content-between">
   <nav aria-label="pagination">
     <ul>
-      <li>
+      <li class="hidden md:inline-block">
         <button
           aria-label="Go To Previous Page"
           [attr.aria-disabled]="current === 1"
@@ -12,7 +12,7 @@
         </button>
       </li>
 
-      <li *ngFor="let page of pages">
+      <li *ngFor="let page of pages" class="flex">
         <a
           [attr.aria-current]="page === current ? 'page' : null"
           [attr.aria-label]="
@@ -31,7 +31,7 @@
         <div *ngIf="page === -1">...</div>
       </li>
 
-      <li>
+      <li class="hidden md:inline-block">
         <button
           aria-label="Go To Next Page"
           [attr.aria-disabled]="current === total"
