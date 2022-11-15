@@ -55,7 +55,11 @@ export interface Home {
   front_shiny: string;
   front_shiny_female?: any;
 }
-
+export interface PokeType {
+  type: {
+    name: string;
+  };
+}
 export interface OfficialArtwork {
   front_default: string;
 }
@@ -71,7 +75,7 @@ export interface Form {}
 export interface GameIndice {}
 export interface HeldItem {}
 export interface Species {}
-export interface PokeType {}
+
 export interface PastType {}
 export interface Stat {}
 export interface Move {}

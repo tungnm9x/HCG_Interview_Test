@@ -1,5 +1,4 @@
-<!-- Trailer section -->
-
+<!-- TRAILER SECTON -->
 <section>
   <ng-container *ngIf="carouselItems$ | async as carouselItems">
     <div class="mx-8 mt-12">
@@ -7,13 +6,18 @@
     </div>
   </ng-container>
 </section>
-<!-- END Trailer section -->
+<!-- END TRAILER SECTON -->
 
-<!-- Pokémon section -->
+<!-- POKEMON SECTION -->
 <section>
   <div class="container mx-auto py-14">
     <!-- TITLE -->
-    <h2 class="text-4xl tracking-tight font-bold mb-4">Pokemons</h2>
+    <div class="flex justify-between items-center">
+      <h2 class="text-4xl tracking-tight font-bold mb-4">Pokemons</h2>
+      <button class="outline-none bg-transparent hover:font-bold">
+        View More
+      </button>
+    </div>
 
     <!-- LIST -->
     <ng-container *ngIf="(loadPokemonStatus$ | async) === 'success'">
@@ -22,7 +26,10 @@
           class="mt-6 mb-6 grid grid-cols-1 xl:grid-cols-5 gap-y-10 xl:gap-x-8"
         >
           <ng-container *ngFor="let i of pokemons">
-            <nmt-pokemon-item [item]="i"></nmt-pokemon-item>
+            <nmt-pokemon-item
+              [item]="i"
+              (click)="showDetail(i)"
+            ></nmt-pokemon-item>
           </ng-container>
         </div>
       </ng-container>
@@ -36,12 +43,16 @@
       <div *ngIf="error$ | async as error" class="text-red-500 p-8">
         {{ error }}
       </div>
+
+      <div class="cursor-pointer flex items-center mt-4" (click)="refresh()">
+        Click here to reload <i class="bx bx-refresh bx-sm"></i>
+      </div>
     </ng-container>
     <!-- END LIST -->
   </div>
 </section>
-<!-- END Pokémon section -->
+<!-- END POKEMON SECTION -->
 
-<ng-template #skeleton>
-  <nmt-skeleton></nmt-skeleton>
-</ng-template>
+<nmt-modal [(isVisible)]="isVisible" [showClose]="true">
+  <nmt-pokemon-detail [pokemon]="pokemonSelected$ | async"></nmt-pokemon-detail>
+</nmt-modal>

@@ -12,3 +12,8 @@ export const loadPokemonsFailure = createAction(
   '[Home Page] Load Pokemons Failure',
   props<{ error: string }>()
 );
+
+export const selectPokemon = createAction(
+  '[Home Page] Select Pokemon',
+  props<{ item: PokemonDetail }>()
+);

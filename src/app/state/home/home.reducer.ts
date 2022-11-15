@@ -3,6 +3,7 @@ import {
   loadPokemons,
   loadPokemonsFailure,
   loadPokemonsSuccess,
+  selectPokemon,
 } from './home.actions';
 import { PokemonDetail } from './home.model';
 
@@ -13,6 +14,7 @@ export interface HomeState {
   videoUrls: string[];
   status: Status;
   error: string | null;
+  pokemonSelected: PokemonDetail | null;
 }
 
 export const initHomeState: HomeState = {
@@ -25,6 +27,7 @@ export const initHomeState: HomeState = {
   ],
   status: 'init',
   error: null,
+  pokemonSelected: null,
 };
 
 export const homeReducer = createReducer(
@@ -41,5 +44,9 @@ export const homeReducer = createReducer(
     status: 'error',
     pokemons: [],
     error,
+  })),
+  on(selectPokemon, (state, { item }) => ({
+    ...state,
+    pokemonSelected: item,
   }))
 );

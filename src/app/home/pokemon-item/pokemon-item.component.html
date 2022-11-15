@@ -5,7 +5,7 @@
     <div class="text-center mb-4">#{{ item.id }}</div>
     <img
       [src]="item.sprites.other.dream_world.front_default"
-      alt="pokemon sprite"
+      [alt]="item.name + ' sprite'"
       class="h-64 mb-8 w-full px-8"
     />
     <div class="font-bold text-2xl text-center mb-4">{{ item.name }}</div>

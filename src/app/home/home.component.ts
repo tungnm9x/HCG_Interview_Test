@@ -3,13 +3,14 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { CarouselItem } from 'app/shared/carousel/carousel.component';
 import { AppState } from 'app/state/app.state';
-import { loadPokemons } from 'app/state/home/home.actions';
+import { loadPokemons, selectPokemon } from 'app/state/home/home.actions';
 import { PokemonDetail } from 'app/state/home/home.model';
 import { Status } from 'app/state/home/home.reducer';
 import {
   selectAllPokemon,
   selectAllVideoUrl,
   selectErrorPokemons,
+  selectPokemonSelected,
   selectStatusPokemons,
 } from 'app/state/home/home.selectors';
 import { map, Observable } from 'rxjs';
@@ -40,6 +41,12 @@ export class HomeComponent implements OnInit {
 
   error$: Observable<string | null> = this.store.select(selectErrorPokemons);
 
+  pokemonSelected$: Observable<PokemonDetail | null> = this.store.select(
+    selectPokemonSelected
+  );
+
+  isVisible = false;
+
   constructor(
     private _sanitizer: DomSanitizer,
     private store: Store<AppState>
@@ -47,5 +54,14 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(loadPokemons());
+  }
+
+  refresh() {
+    this.store.dispatch(loadPokemons());
+  }
+
+  showDetail(pokemon: PokemonDetail) {
+    this.isVisible = true;
+    this.store.dispatch(selectPokemon({ item: pokemon }));
   }
 }

@@ -19,3 +19,7 @@ export const selectErrorPokemons = createSelector(
   selectHome,
   (state) => state.error
 );
+export const selectPokemonSelected = createSelector(
+  selectHome,
+  (state) => state.pokemonSelected
+);
