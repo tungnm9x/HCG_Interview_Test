@@ -17,6 +17,13 @@ const routes: Routes = [
     path: 'home',
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
   },
+  {
+    path: 'pokemon',
+    loadChildren: () =>
+      import('./pokemon-list/pokemon-list.module').then(
+        (m) => m.PokemonListModule
+      ),
+  },
   { path: '', pathMatch: 'full', redirectTo: '/home' },
 ];
 

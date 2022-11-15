@@ -8,16 +8,10 @@ import { SharedModule } from 'app/shared/shared.module';
 import { HomeEffects } from 'app/state/home/home.effects';
 import { HomeComponent } from './home.component';
 import { ItemSectionComponent } from './item-section/item-section.component';
-import { PokemonDetailComponent } from './pokemon-detail/pokemon-detail.component';
-import { PokemonItemComponent } from './pokemon-item/pokemon-item.component';
+import { HomeSharedModule } from './shared/home-shared.module';
 
 @NgModule({
-  declarations: [
-    HomeComponent,
-    PokemonItemComponent,
-    PokemonDetailComponent,
-    ItemSectionComponent,
-  ],
+  declarations: [HomeComponent, ItemSectionComponent],
   imports: [
     CommonModule,
     RouterModule.forChild([
@@ -26,6 +20,7 @@ import { PokemonItemComponent } from './pokemon-item/pokemon-item.component';
         component: HomeComponent,
       },
     ]),
+    HomeSharedModule,
     CarouselModule,
     ModalModule,
     SharedModule,

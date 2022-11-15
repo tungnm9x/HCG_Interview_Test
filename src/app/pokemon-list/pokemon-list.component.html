@@ -1,0 +1,86 @@
+<section>
+  <div class="container mx-auto py-14">
+    <!-- TITLE -->
+
+    <div class="flex justify-between items-center">
+      <h2 class="text-4xl tracking-tight font-bold mb-8">Pokemons List</h2>
+      <button
+        class="outline-none bg-transparent hover:font-bold"
+        [routerLink]="[ROUTES_CONST.HOME.ROOT]"
+      >
+        <i
+          class="bx bx-subdirectory-left bx-md rounded-full shadow-xl h-full hover:scale-110 cursor-pointer transition ease-in-out p-3"
+        ></i>
+      </button>
+    </div>
+
+    <!-- LIST -->
+    <div class="filter-box mb-10">
+      <div class="grid grid-cols-4">
+        <!-- <div class="font-semibold mb-4">Search by name</div> -->
+        <input
+          [formControl]="formControl"
+          class="nmt-input w-56"
+          placeholder="Search by Name"
+          type="text"
+        />
+      </div>
+      <div class="text-gray-500 mt-4 text-sm">
+        *Filter only in Frontend because PokemonAPI doesn't support filtering
+        list by Name
+      </div>
+    </div>
+
+    <ng-container *ngIf="loadPokemonStatus$ | async as status">
+      <ng-container *ngIf="status === 'success'">
+        <ng-container *ngIf="pokemons$ | async as pokemons">
+          <div
+            class="mt-6 mb-6 grid grid-cols-1 xl:grid-cols-5 gap-y-10 xl:gap-x-8"
+          >
+            <ng-container *ngFor="let i of pokemons; trackBy: trackByFn">
+              <nmt-pokemon-item
+                [item]="i"
+                (click)="showDetail(i)"
+              ></nmt-pokemon-item>
+            </ng-container>
+          </div>
+
+          <div *ngIf="pokemons.length == 0" class="">No data found.</div>
+        </ng-container>
+      </ng-container>
+
+      <ng-container *ngIf="status === 'loading'">
+        <nmt-skeleton></nmt-skeleton>
+      </ng-container>
+
+      <ng-container *ngIf="status === 'error'">
+        <div *ngIf="error$ | async as error" class="text-red-500 p-8">
+          {{ error }}
+
+          <div
+            class="cursor-pointer flex items-center mt-4"
+            (click)="refresh()"
+          >
+            Click here to reload <i class="bx bx-refresh bx-sm"></i>
+          </div>
+        </div>
+      </ng-container>
+
+      <div class="pb-8"></div>
+
+      <nmt-pagination
+        *ngIf="vm$ | async as vm"
+        [total]="vm[0]"
+        [current]="vm[1].current"
+        [pageSize]="vm[1].pageSize"
+        (pageChange)="pageChange($event)"
+      ></nmt-pagination>
+    </ng-container>
+
+    <!-- END LIST -->
+  </div>
+</section>
+
+<nmt-modal [(isVisible)]="isVisible" [showClose]="true">
+  <nmt-pokemon-detail [pokemon]="pokemonSelected$ | async"></nmt-pokemon-detail>
+</nmt-modal>

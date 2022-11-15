@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { PaginationEvent } from '@core/models/filter.model';
+import { GetListResponse, ResultItem } from '@core/models/response.model';
 import { ItemService } from '@core/services/item.service';
 import { PokemonService } from '@core/services/pokemon.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
@@ -11,12 +13,7 @@ import {
   loadPokemonsFailure,
   loadPokemonsSuccess,
 } from './home.actions';
-import {
-  GetListResponse,
-  ItemDetail,
-  PokemonDetail,
-  ResultItem,
-} from './home.model';
+import { ItemDetail, PokemonDetail } from './home.model';
 
 @Injectable()
 export class HomeEffects {
@@ -24,7 +21,7 @@ export class HomeEffects {
     this.actions$.pipe(
       ofType(loadPokemons),
       switchMap((_) =>
-        this.pokemonService.getList({}, { offset: 0, limit: 10 }).pipe(
+        this.pokemonService.getList(new PaginationEvent(1, 10)).pipe(
           map((res: GetListResponse) => res.results),
           switchMap((results: ResultItem[]) => {
             const arrObs: Observable<PokemonDetail>[] = results.map((p) =>
